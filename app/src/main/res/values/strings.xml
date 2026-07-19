@@ -14,7 +14,8 @@
     <!-- 主页 -->
     <string name="home_quick_nav">快捷导航</string>
     <string name="home_data_saver_title">数据节省模式</string>
-    <string name="home_data_saver_desc">压缩页面加载，最高省 50% 流量</string>
+    <string name="home_data_saver_desc">压缩视频画质，最高省 70% 流量</string>
+    <string name="home_data_saver_on">省流模式已%1$s</string>
     <string name="home_lite_on">省流模式已开启</string>
     <string name="home_lite_off">省流模式已关闭</string>
     <string name="home_search_voice_hint">语音搜索</string>
@@ -205,6 +206,13 @@
 
     <!-- 引擎管理 -->
     <string name="settings_search_engines">搜索引擎管理</string>
+
+    <!-- 视频画质压缩 -->
+    <string name="settings_saver_bitrate_title">选择压缩画质档位</string>
+    <string name="settings_saver_mode">网页视频画质压缩</string>
+    <string name="settings_saver_mode_desc">弱网下对网页在线视频做实时低码率转码</string>
+    <string name="settings_saver_auto">弱网自动开启压缩</string>
+    <string name="settings_saver_bitrate">压缩画质档位</string>
 
     <!-- 设置 -->
     <string name="settings_appearance">外观</string>
