@@ -274,5 +274,22 @@
     <string name="network_error">网络错误</string>
     <string name="permission_required">需要权限</string>
     <string name="grant">授予</string>
+    <string name="permission_granted">已授权</string>
+    <string name="permission_not_granted">未授权</string>
+    <string name="permission_overlay_required">需要悬浮窗权限才能开始悬浮播放</string>
+
+    <!-- 权限引导页文案 -->
+    <string name="permission_overlay_title">悬浮窗权限</string>
+    <string name="permission_overlay_desc">允许「星云浏览器」显示在其他应用上层，才能在桌面、聊天或任意 App 上悬浮播放视频。</string>
+    <string name="permission_install_title">安装未知应用</string>
+    <string name="permission_install_desc">下载完成的安装包（APK/CRX）需要授权「星云浏览器」可安装未知应用后才能直接打开。</string>
+    <string name="permission_storage_title">所有文件访问</string>
+    <string name="permission_storage_desc">下载与书库需要访问存储空间。仅在 Android 11 及以上需要这个高级权限；我们会尊重您的隐私。</string>
+    <string name="permission_notification_title">通知权限</string>
+    <string name="permission_notification_desc">允许发送通知，便于向您推送下载完成、悬浮视频状态、AI 回复等事件。</string>
+    <string name="permission_camera_title">相机权限</string>
+    <string name="permission_camera_desc">扫码与网页调用相机功能时需要使用您的相机。</string>
+    <string name="permission_mic_title">麦克风权限</string>
+    <string name="permission_mic_desc">语音搜索与 AI 语音输入需要使用您的麦克风。</string>
 
 </resources>
