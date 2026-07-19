@@ -115,6 +115,19 @@
         <item name="android:colorForeground">@color/nebula_blue</item>
     </style>
 
+    <!-- 画质面板 overlay：底部圆角白底，无标题，dim=0.5 -->
+    <style name="ThemeOverlay.Nebula.QualitySheet" parent="ThemeOverlay.Material3">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Nebula.BottomSheet</item>
+        <item name="android:backgroundDimAmount">0.45</item>
+    </style>
+
+    <!-- 底部上滑动画（用于画质面板） -->
+    <style name="Animation.Nebula.BottomSheet" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
     <!-- 文字样式 -->
     <style name="TextAppearance.Nebula.Title" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textColor">@color/text_primary</item>
