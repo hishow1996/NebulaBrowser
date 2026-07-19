@@ -7,6 +7,8 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 object YtDlpBridge {
     suspend fun ensureBinary(context: Context): File? = withContext(Dispatchers.IO) {
@@ -19,15 +21,46 @@ object YtDlpBridge {
             else -> "bin_arm64"
         }
         val target = File(context.filesDir, "ytdlp_bin")
+        // 1) 已存在可直接复用
+        if (target.exists() && target.canExecute()) return@withContext target
+        // 2) 尝试从 assets 中拷annabentbin（assets/ytdlp/bin_arm64 等）
         try {
-            if (target.exists() && target.canExecute()) return@withContext target
             context.assets.open("ytdlp/$name").use { input ->
                 FileOutputStream(target).use { input.copyTo(it) }
             }
-            target.setExecutable(true, true)
+            if (target.setExecutable(true, true)) return@withContext target
+        } catch (_: Exception) { /* 继续走运行时下载分支 */ }
+        // 3) 回退：从 SettingsManager.ytdlpBinaryUrl 在线下载首个二进制
+        val url = com.nebula.browser.store.SettingsManager.ytdlpBinaryUrl
+        if (url.isBlank()) {
+            toast(context.getString(com.nebula.browser.R.string.ytdlp_no_url))
+            return@withContext null
+        }
+        toast(context.getString(com.nebula.browser.R.string.ytdlp_downloading))
+        try {
+            val conn = URL(url).openConnection() as HttpURLConnection
+            conn.connectTimeout = 15_000
+            conn.readTimeout = 60_000
+            conn.requestMethod = "GET"
+            conn.instanceFollowRedirects = true
+            if (conn.responseCode !in 200..299) {
+                toast(context.getString(com.nebula.browser.R.string.ytdlp_download_fail,
+                    "HTTP ${conn.responseCode}"))
+                return@withContext null
+            }
+            conn.inputStream.use { input ->
+                FileOutputStream(target).use { out -> input.copyTo(out) }
+            }
+            if (!target.setExecutable(true, true)) {
+                toast(context.getString(com.nebula.browser.R.string.ytdlp_download_fail,
+                    "chmod failed"))
+                return@withContext null
+            }
+            toast(context.getString(com.nebula.browser.R.string.ytdlp_download_ok))
             target
         } catch (e: Exception) {
-            toast("yt-dlp 二进制缺失，请通过热更新下载")
+            toast(context.getString(com.nebula.browser.R.string.ytdlp_download_fail,
+                e.message ?: e.javaClass.simpleName))
             null
         }
     }

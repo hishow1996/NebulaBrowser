@@ -292,4 +292,38 @@
     <string name="permission_mic_title">麦克风权限</string>
     <string name="permission_mic_desc">语音搜索与 AI 语音输入需要使用您的麦克风。</string>
 
+    <!-- 书签 / 历史 / 翻译 -->
+    <string name="bookmark_add_current">加入当前页</string>
+    <string name="bookmark_no_page">当前没有可收藏的页面</string>
+    <string name="bookmark_added">已加入书签</string>
+    <string name="bookmark_already_exists">已在书签中</string>
+    <string name="bookmark_deleted">已删除书签</string>
+    <string name="bookmark_cleared">已清空书签</string>
+    <string name="bookmark_empty">还没有书签</string>
+
+    <string name="history_clear_all">清空全部</string>
+    <string name="history_cleared">已清空历史</string>
+    <string name="history_deleted">已删除</string>
+    <string name="history_search_hint">搜索历史…</string>
+
+    <string name="translate_loading">正在翻译…</string>
+    <string name="translate_done">已切换到翻译版网页</string>
+    <string name="translate_failed">翻译失败：%1$s</string>
+    <string name="translate_no_page">请先打开一个网页再翻译</string>
+
+    <!-- 视频播放器：字幕 / 倍速 -->
+    <string name="video_caption">字幕</string>
+    <string name="video_speed">倍速</string>
+    <string name="caption_input_url">字幕地址（srt/vtt）</string>
+    <string name="caption_load_ok">已加载字幕：%1$d 条</string>
+    <string name="caption_load_fail">加载字幕失败</string>
+    <string name="caption_disable">关闭字幕</string>
+    <string name="speed_current">当前倍速 %1$.2fx</string>
+
+    <!-- yt-dlp -->
+    <string name="ytdlp_downloading">正在下载 yt-dlp 二进制…</string>
+    <string name="ytdlp_download_ok">yt-dlp 就绪</string>
+    <string name="ytdlp_download_fail">yt-dlp 下载失败：%1$s</string>
+    <string name="ytdlp_no_url">未配置 yt-dlp 二进制下载地址，请在设置中填写</string>
+
 </resources>

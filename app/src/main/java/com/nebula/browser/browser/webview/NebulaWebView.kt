@@ -28,6 +28,8 @@ import java.io.ByteArrayInputStream
 class NebulaWebView(context: Context) : WebView(context) {
 
     var onVideoDetected: ((String, String?, String?) -> Unit)? = null
+    /** 页面访问完成（onPageFinished）后回调一次：(url, title)。供 BrowserFragment 记录历史用。 */
+    var onVisit: ((url: String, title: String) -> Unit)? = null
     private val detector = VideoDetectorInterceptor()
     private val scriptInjector = UserScriptInjector(context)
     private val extensionInjector = com.nebula.browser.plugin.inject.ContentScriptInjector()
@@ -89,6 +91,12 @@ class NebulaWebView(context: Context) : WebView(context) {
                     it.url = url ?: ""
                     it.isLoading = false
                     it.progress = 100
+                }
+                // 通知外部记录浏览历史（BrowserFragment 决定是否要记）
+                val safeUrl = url ?: ""
+                if (safeUrl.isNotBlank() && !safeUrl.startsWith("about:")) {
+                    val title = tab.title.ifBlank { safeUrl }
+                    onVisit?.invoke(safeUrl, title)
                 }
             }
         }

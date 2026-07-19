@@ -181,6 +181,7 @@ data class SubtitleTranslationEntity(
     @Query("SELECT * FROM bookmark ORDER BY createdAt DESC") fun getAll(): kotlinx.coroutines.flow.Flow<List<BookmarkEntity>>
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun add(b: BookmarkEntity)
     @Query("DELETE FROM bookmark WHERE id = :id") suspend fun delete(id: Long)
+    @Query("DELETE FROM bookmark") suspend fun clear()
     @Query("SELECT EXISTS(SELECT 1 FROM bookmark WHERE url = :url)") suspend fun exists(url: String): Boolean
 }
 

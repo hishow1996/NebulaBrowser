@@ -33,6 +33,8 @@ object SettingsManager {
     const val KEY_READER_THEME = "reader_theme"
     /** 网页内视频画质用户选择档位（0=自动 1=240 2=360 3=480 4=720 5=原画） */
     const val KEY_WEB_VIDEO_QUALITY = "web_video_quality"
+    /** yt-dlp 二进制运行时下载地址（assets 缺失情况下从该 URL 下载并以可执行权限存到 filesDir）。 */
+    const val KEY_YTDLP_URL = "ytdlp_binary_url"
 
     var themeMode: Int
         get() = AppContext.prefs.getInt(KEY_THEME_MODE, THEME_DAY)
@@ -97,4 +99,12 @@ object SettingsManager {
     var webVideoQuality: Int
         get() = getPrefInt(KEY_WEB_VIDEO_QUALITY, 0)
         set(v) = putPref(KEY_WEB_VIDEO_QUALITY, v)
+
+    /**
+     * yt-dlp 二进制下载 URL。默认留空——表示优先从 assets 取（assets/ytdlp/bin_arm64 等），
+     * 找不到则要求用户在设置中填写一个 HTTP/HTTPS 直链（通常指向 GitHub Release 的预编译二进制）。
+     */
+    var ytdlpBinaryUrl: String
+        get() = getPrefString(KEY_YTDLP_URL, "")
+        set(v) = putPref(KEY_YTDLP_URL, v)
 }

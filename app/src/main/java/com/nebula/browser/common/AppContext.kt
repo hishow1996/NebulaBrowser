@@ -18,7 +18,15 @@ object AppContext {
 }
 
 fun toast(message: String, long: Boolean = false) {
-    Toast.makeText(AppContext.appContext, message, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+    val ctx = AppContext.appContext
+    val dur = if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+    if (android.os.Looper.myLooper() === android.os.Looper.getMainLooper()) {
+        Toast.makeText(ctx, message, dur).show()
+    } else {
+        android.os.Handler(android.os.Looper.getMainLooper()).post {
+            Toast.makeText(ctx, message, dur).show()
+        }
+    }
 }
 
 fun putPref(key: String, value: Any?) {

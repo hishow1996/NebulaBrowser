@@ -115,6 +115,10 @@
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".browser.downloader.DownloadListActivity" android:exported="false"
             android:parentActivityName=".MainActivity"/>
+        <activity android:name=".browser.bookmark.BookmarkActivity" android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".browser.history.HistoryActivity" android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".reader.novel.NovelReaderActivity" android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".reader.novel.MangaReaderActivity" android:exported="false"

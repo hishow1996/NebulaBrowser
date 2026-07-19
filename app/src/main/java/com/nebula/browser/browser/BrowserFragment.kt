@@ -212,6 +212,7 @@ class BrowserFragment : Fragment() {
             setup()
             tag = tab
             onVideoDetected = { _, _, _ -> }
+            onVisit = { url, title -> vm.recordHistory(title, url) }
         }
         tab.webview = wv
         attachWebView(tab)
@@ -290,11 +291,11 @@ class BrowserFragment : Fragment() {
                 "extensions" -> openActivity("com.nebula.browser.plugin.ui.ExtensionsManagerActivity")
                 "webstore" -> openActivity("com.nebula.browser.plugin.ui.ChromeWebStoreActivity")
                 "ai" -> openActivity("com.nebula.browser.ai.ui.AiChatActivity")
-                "translate" -> toast(getString(R.string.menu_translate))
+                "translate" -> translateCurrentPage()
                 "floating_video" -> requestFloatingPlayback()
                 "download" -> openActivity("com.nebula.browser.browser.downloader.DownloadListActivity")
-                "bookmark" -> toast(getString(R.string.menu_bookmark))
-                "history" -> toast(getString(R.string.menu_history))
+                "bookmark" -> openActivity("com.nebula.browser.browser.bookmark.BookmarkActivity")
+                "history" -> openActivity("com.nebula.browser.browser.history.HistoryActivity")
                 "settings" -> openActivity("com.nebula.browser.settings.SettingsActivity")
                 "incognito" -> {
                     val t = tabManager.new(incognito = true)
@@ -311,6 +312,36 @@ class BrowserFragment : Fragment() {
         } catch (e: Exception) {
             toast("功能开发中")
         }
+    }
+
+    /**
+     * 把当前页面的 URL 通过 Google Translate 免费代理 URL 转换为翻译网页，
+     * 让 WebView 在原标签页里加载翻译版本。目标语言取自 SettingsManager.tgtLang（默认 zh-CN）。
+     */
+    private fun translateCurrentPage() {
+        val tab = tabManager.current
+        val url = tab?.url
+        if (url.isNullOrBlank() || url == "about:blank") {
+            toast(getString(R.string.translate_no_page))
+            return
+        }
+        val tgt = com.nebula.browser.store.SettingsManager.tgtLang.ifBlank { "zh-CN" }
+        // Google Translate 免费代理：在同一 webview 内打开译文页面
+        val transUrl = "https://translate.google.com/translate?sl=auto&tl=" +
+            java.net.URLEncoder.encode(tgt, "UTF-8") + "&u=" +
+            java.net.URLEncoder.encode(url, "UTF-8")
+        toast(getString(R.string.translate_loading))
+        try {
+            openUrl(transUrl)
+        } catch (e: Exception) {
+            toast(getString(R.string.translate_failed, e.message ?: ""))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 消费来自书签/历史/外部 Intent 的待打开 URL
+        UrlRouter.consume()?.let { openUrl(it) }
     }
 
     private fun detectVideo() {

@@ -110,8 +110,34 @@ class SettingsAdapter(val items: List<SettingItem>) : RecyclerView.Adapter<Recyc
             }
             "clear_cache" -> { ctx.cacheDir.deleteRecursively(); toast("已清除缓存") }
             "about" -> toast("星云浏览器 v1.0.0")
+            "ytdlp_url" -> showYtdlpUrlPicker(ctx)
             else -> toast("功能开发中")
         }
+    }
+
+    /** yt-dlp 二进制下载 URL 输入框。 */
+    private fun showYtdlpUrlPicker(ctx: Context) {
+        val input = android.widget.EditText(ctx).apply {
+            hint = "https://github.com/.../releases/download/.../yt-dlp-android-arm64"
+            setText(com.nebula.browser.store.SettingsManager.ytdlpBinaryUrl)
+            inputType = android.text.InputType.TYPE_TEXT_VARIATION_URI
+            setSingleLine(true)
+        }
+        val container = android.widget.LinearLayout(ctx).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            setPadding(56, 24, 56, 0)
+            addView(input)
+        }
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(ctx)
+            .setTitle("yt-dlp 二进制下载地址")
+            .setView(container)
+            .setPositiveButton(com.nebula.browser.R.string.ok) { _, _ ->
+                com.nebula.browser.store.SettingsManager.ytdlpBinaryUrl =
+                    input.text.toString().trim()
+                toast("已保存 yt-dlp 下载地址")
+            }
+            .setNegativeButton(com.nebula.browser.R.string.cancel, null)
+            .show()
     }
 
     /** 网页视频画质压缩目标码率选择。 */
@@ -185,6 +211,9 @@ private fun buildItems() = listOf(
     SettingItem(R.drawable.ic_quality, "启用视频缓存", "LRU 缓存最近观看视频", SettingItem.Type.SWITCH, "video_cache",
         com.nebula.browser.store.SettingsManager.videoCache),
     SettingItem(R.drawable.ic_close, "清除压缩节省统计", "重置已节省流量累计", SettingItem.Type.CLICK, "clear_stats"),
+
+    SettingItem(R.drawable.ic_download, "yt-dlp 二进制下载地址",
+        "assets 缺失时从此 URL 拉取预编译二进制", SettingItem.Type.CLICK, "ytdlp_url"),
 
     SettingItem(R.drawable.ic_close, "清除缓存", "释放存储空间", SettingItem.Type.CLICK, "clear_cache"),
     SettingItem(R.drawable.ic_settings, "关于", "星云浏览器 v1.0.0", SettingItem.Type.CLICK, "about")
