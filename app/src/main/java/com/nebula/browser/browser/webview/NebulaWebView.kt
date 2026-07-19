@@ -103,7 +103,78 @@ class NebulaWebView(context: Context) : WebView(context) {
             if (SettingsManager.adBlock && AdBlocker.shouldBlock(url)) {
                 return WebResourceResponse("text/html", "utf-8", ByteArrayInputStream(ByteArray(0)))
             }
+            // 网页视频画质压缩：把视频/流媒体请求改写到本地 VideoProxyServer
+            if (com.nebula.browser.media.saver.DataSaverBus.enabled.value &&
+                !com.nebula.browser.media.proxy.VideoProxyServer.isProxy(url) &&
+                isStreamableVideo(url, request)
+            ) {
+                return routeThroughProxy(url)
+            }
             return super.shouldInterceptRequest(view, request)
+        }
+
+        /**
+         * 判断该请求是否是网页在线视频流（m3u8/dash/mp4/webm/mkv/flv/ts 或 mime video/*）。
+         * 注意排除广告与小图标（按文件大小无法 here 估算，先按规则粗判）。
+         */
+        private fun isStreamableVideo(url: String, request: WebResourceRequest): Boolean {
+            val low = url.lowercase()
+            // 跳过极小资源（如 segment 列表中带 .ts.xxx 的非视频）—— 通过 Accept 或 Range 启发判定非小图标：
+            // 视频请求几乎都带 Range 或 Accept 含 video
+            val accept = request.requestHeaders?.get("Accept") ?: ""
+            val range = request.requestHeaders?.get("Range")
+            val looksLikeVideoByExt = low.endsWith(".m3u8") || low.contains(".m3u8?") ||
+                low.endsWith(".mpd") || low.contains(".mpd?") ||
+                low.endsWith(".mp4") || low.contains(".mp4?") ||
+                low.endsWith(".webm") || low.contains(".webm?") ||
+                low.endsWith(".mkv") || low.endsWith(".flv") ||
+                low.endsWith(".ts") || low.contains(".ts?")
+            val looksLikeVideoByMime = accept.contains("video/") ||
+                accept.contains("application/vnd.apple.mpegurl") ||
+                accept.contains("application/x-mpegurl") ||
+                accept.contains("application/dash+xml")
+            // 排除很可能是图片/音频的情况
+            if (low.endsWith(".jpg") || low.endsWith(".png") || low.endsWith(".gif") ||
+                low.endsWith(".webp") || low.endsWith(".bmp") || low.endsWith(".svg") ||
+                low.endsWith(".mp3") || low.endsWith(".m4a") || low.endsWith(".aac") ||
+                low.endsWith(".ogg") || low.endsWith(".wav") || low.endsWith(".flac")
+            ) return false
+            // Range 通常出现在视频/大文件分块请求
+            return looksLikeVideoByExt || (looksLikeVideoByMime && range != null)
+        }
+
+        /** 改写到本地代理并把代理 InputStream 包装为 WebResourceResponse。 */
+        private fun routeThroughProxy(url: String): WebResourceResponse? = try {
+            val proxyUrl = com.nebula.browser.media.proxy.VideoProxyServer.wrap(url)
+            val conn = java.net.URL(proxyUrl).openConnection() as java.net.HttpURLConnection
+            conn.connectTimeout = 8_000
+            conn.readTimeout = 60_000
+            conn.requestMethod = "GET"
+            // 透传原 Range 让代理支持断点续播
+            conn.setRequestProperty("User-Agent", "NebulaBrowser/1.0 Proxy")
+            val mime = guessStreamMime(url)
+            WebResourceResponse(mime, "utf-8", conn.inputStream).apply {
+                setStatusCodeAndReasonPhrase(conn.responseCode, "OK")
+                responseHeaders = mapOf(
+                    "Accept-Ranges" to "bytes",
+                    "Cache-Control" to "no-cache",
+                    "Access-Control-Allow-Origin" to "*"
+                )
+            }
+        } catch (_: Exception) { null }
+
+        private fun guessStreamMime(url: String): String {
+            val l = url.lowercase()
+            return when {
+                l.contains(".m3u8") -> "application/vnd.apple.mpegurl"
+                l.contains(".mpd") -> "application/dash+xml"
+                l.contains(".mp4") -> "video/mp4"
+                l.contains(".webm") -> "video/webm"
+                l.contains(".ts") -> "video/mp2t"
+                l.contains(".flv") -> "video/x-flv"
+                l.contains(".mkv") -> "video/x-matroska"
+                else -> "application/octet-stream"
+            }
         }
 
         private fun resolveExtensionResource(url: String): WebResourceResponse? {
