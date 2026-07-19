@@ -1,5 +1,6 @@
 package com.nebula.browser.settings
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -86,7 +87,11 @@ class SettingsAdapter(val items: List<SettingItem>) : RecyclerView.Adapter<Recyc
             "dark_web" -> com.nebula.browser.common.putPref(SettingsManager.KEY_DARK_WEB, value)
             "float_global" -> com.nebula.browser.common.putPref(SettingsManager.KEY_FLOAT_GLOBAL, value)
             "auto_quality" -> com.nebula.browser.common.putPref(SettingsManager.KEY_AUTO_QUALITY, value)
-            "saver_mode" -> com.nebula.browser.common.putPref(SettingsManager.KEY_SAVER, value)
+            "saver_mode" -> {
+                com.nebula.browser.common.putPref(SettingsManager.KEY_SAVER, value)
+                com.nebula.browser.media.saver.DataSaverBus.setEnabled(value)
+            }
+            "saver_auto" -> com.nebula.browser.common.putPref(SettingsManager.KEY_SAVER_AUTO, value)
             "caption_default" -> com.nebula.browser.common.putPref(SettingsManager.KEY_CAPTION_DEFAULT, value)
             "auto_translate" -> com.nebula.browser.common.putPref(SettingsManager.KEY_AUTO_TRANSLATE, value)
             "video_cache" -> com.nebula.browser.common.putPref(SettingsManager.KEY_VIDEO_CACHE, value)
@@ -98,10 +103,45 @@ class SettingsAdapter(val items: List<SettingItem>) : RecyclerView.Adapter<Recyc
             "theme_day" -> { SettingsManager.themeMode = SettingsManager.THEME_DAY; AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) }
             "theme_night" -> { SettingsManager.themeMode = SettingsManager.THEME_NIGHT; AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) }
             "theme_system" -> { SettingsManager.themeMode = SettingsManager.THEME_SYSTEM; AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) }
+            "saver_bitrate" -> showBitratePicker(ctx)
+            "clear_stats" -> {
+                com.nebula.browser.media.saver.DataSaverBus.resetStats()
+                toast("数据节省统计已清零")
+            }
             "clear_cache" -> { ctx.cacheDir.deleteRecursively(); toast("已清除缓存") }
             "about" -> toast("星云浏览器 v1.0.0")
             else -> toast("功能开发中")
         }
+    }
+
+    /** 网页视频画质压缩目标码率选择。 */
+    private fun showBitratePicker(ctx: Context) {
+        val options = listOf(
+            "极致省流 · 240P (300kbps)" to 300_000,
+            "省流 · 360P (600kbps)" to 600_000,
+            "流畅 · 480P (1200kbps)" to 1_200_000,
+            "高清 · 720P (2500kbps)" to 2_500_000,
+            "不限制" to Int.MAX_VALUE
+        )
+        val labels = options.map { it.first }.toTypedArray()
+        val cur = SettingsManager.saverBitrate
+        val checked = options.indexOfFirst { it.second == cur }.coerceAtLeast(0)
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(ctx)
+            .setTitle(com.nebula.browser.R.string.settings_saver_bitrate_title)
+            .setSingleChoiceItems(labels, checked) { dialog, which ->
+                SettingsManager.saverBitrate = options[which].second
+                SettingsManager.saverWidth = when (options[which].second) {
+                    300_000 -> 426
+                    600_000 -> 640
+                    1_200_000 -> 854
+                    2_500_000 -> 1280
+                    else -> 1920
+                }
+                toast("已设为 ${labels[which]}")
+                dialog.dismiss()
+            }
+            .setNegativeButton(com.nebula.browser.R.string.cancel, null)
+            .show()
     }
 }
 
@@ -130,8 +170,13 @@ private fun buildItems() = listOf(
 
     SettingItem(R.drawable.ic_quality, "网速自适应画质", "根据网速自动切换清晰度", SettingItem.Type.SWITCH, "auto_quality",
         com.nebula.browser.store.SettingsManager.autoQuality),
-    SettingItem(R.drawable.ic_quality, "省流模式", "限制最高 480P", SettingItem.Type.SWITCH, "saver_mode",
+    SettingItem(R.drawable.ic_quality, "网页视频画质压缩", "弱网自动转码为低码率流播放", SettingItem.Type.SWITCH, "saver_mode",
         com.nebula.browser.store.SettingsManager.saveMode),
+    SettingItem(R.drawable.ic_quality, "压缩画质档位",
+        "目标码率/分辨率（${com.nebula.browser.store.SettingsManager.saverBitrate / 1000} kbps）",
+        SettingItem.Type.CLICK, "saver_bitrate"),
+    SettingItem(R.drawable.ic_quality, "弱网自动开启压缩", "网速持续偏低时自动启用节省", SettingItem.Type.SWITCH, "saver_auto",
+        com.nebula.browser.store.SettingsManager.saverAuto),
 
     SettingItem(R.drawable.ic_caption, "默认显示字幕", "视频打开时自动启用字幕", SettingItem.Type.SWITCH, "caption_default",
         com.nebula.browser.store.SettingsManager.captionDefault),
@@ -139,6 +184,7 @@ private fun buildItems() = listOf(
         com.nebula.browser.store.SettingsManager.autoTranslate),
     SettingItem(R.drawable.ic_quality, "启用视频缓存", "LRU 缓存最近观看视频", SettingItem.Type.SWITCH, "video_cache",
         com.nebula.browser.store.SettingsManager.videoCache),
+    SettingItem(R.drawable.ic_close, "清除压缩节省统计", "重置已节省流量累计", SettingItem.Type.CLICK, "clear_stats"),
 
     SettingItem(R.drawable.ic_close, "清除缓存", "释放存储空间", SettingItem.Type.CLICK, "clear_cache"),
     SettingItem(R.drawable.ic_settings, "关于", "星云浏览器 v1.0.0", SettingItem.Type.CLICK, "about")
