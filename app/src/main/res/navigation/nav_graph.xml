@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_browser">
+    <fragment android:id="@+id/nav_browser" android:name="com.nebula.browser.browser.BrowserFragment" android:label="@string/nav_browser" />
+    <fragment android:id="@+id/nav_shelf" android:name="com.nebula.browser.reader.shelf.ShelfFragment" android:label="@string/nav_shelf" />
+    <fragment android:id="@+id/nav_ai" android:name="com.nebula.browser.ai.ui.AiChatFragment" android:label="@string/nav_ai" />
+    <fragment android:id="@+id/nav_settings" android:name="com.nebula.browser.settings.SettingsFragment" android:label="@string/nav_settings" />
+</navigation>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 基础主题 - 白天 -->
+    <style name="Theme.Nebula" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/nebula_blue</item>
+        <item name="colorPrimaryVariant">@color/nebula_blue_dark</item>
+        <item name="colorOnPrimary">@color/text_inverse</item>
+        <item name="colorSecondary">@color/nebula_purple</item>
+        <item name="colorOnSecondary">@color/text_inverse</item>
+        <item name="colorSurface">@color/bg_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorError">@color/color_error</item>
+        <item name="colorOnError">@color/text_inverse</item>
+
+        <item name="android:statusBarColor">@color/status_bar_light</item>
+        <item name="android:navigationBarColor">@color/nav_bar_light</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Nebula</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Nebula.Dialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Nebula.BottomSheet</item>
+
+        <item name=" editTextStyle">@style/Widget.Nebula.EditText</item>
+        <item name="buttonStyle">@style/Widget.Nebula.Button</item>
+        <item name="materialButtonStyle">@style/Widget.Nebula.Button</item>
+    </style>
+
+    <!-- 启动主题 -->
+    <style name="Theme.Nebula.Splash" parent="Theme.Nebula">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="Animation.Nebula" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+    <!-- 地址栏胶囊 -->
+    <style name="Widget.Nebula.UrlBar" parent="">
+        <item name="android:background">@drawable/bg_url_bar</item>
+        <item name="android:paddingStart">@dimen/spacing_l</item>
+        <item name="android:paddingEnd">@dimen/spacing_l</item>
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_tertiary</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:imeOptions">actionGo</item>
+        <item name="android:inputType">textUri|textNoSuggestions</item>
+    </style>
+
+    <style name="Widget.Nebula.EditText" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_tertiary</item>
+    </style>
+
+    <style name="Widget.Nebula.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/text_inverse</item>
+        <item name="cornerRadius">@dimen/radius_m</item>
+        <item name="backgroundTint">@color/nebula_blue</item>
+    </style>
+
+    <style name="Widget.Nebula.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/nebula_blue</item>
+        <item name="cornerRadius">@dimen/radius_m</item>
+    </style>
+
+    <style name="Widget.Nebula.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/nebula_blue</item>
+    </style>
+
+    <style name="ThemeOverlay.Nebula.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Nebula.Button.Text</item>
+    </style>
+
+    <style name="ThemeOverlay.Nebula.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Nebula.BottomSheet.Modal</item>
+    </style>
+
+    <style name="Widget.Nebula.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/bg_card</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Nebula.TopSheet</item>
+    </style>
+
+    <style name="ShapeAppearance.Nebula.TopSheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_xxl</item>
+        <item name="cornerSizeTopRight">@dimen/radius_xxl</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Nebula.Card" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_l</item>
+    </style>
+
+    <style name="ShapeAppearance.Nebula.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- 文字样式 -->
+    <style name="TextAppearance.Nebula.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_title</item>
+    </style>
+    <style name="TextAppearance.Nebula.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_title_l</item>
+    </style>
+    <style name="TextAppearance.Nebula.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_body</item>
+    </style>
+    <style name="TextAppearance.Nebula.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/text_tertiary</item>
+        <item name="android:textSize">@dimen/text_caption</item>
+    </style>
+
+</resources>

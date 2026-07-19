@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 应用 -->
+    <string name="app_name">星云浏览器</string>
+    <string name="app_slogan">星云漫卷 · 浏览无界</string>
+
+    <!-- 主导航 -->
+    <string name="nav_home">主页</string>
+    <string name="nav_browser">浏览</string>
+    <string name="nav_shelf">书架</string>
+    <string name="nav_ai">AI</string>
+    <string name="nav_settings">设置</string>
+
+    <!-- 地址栏 -->
+    <string name="hint_search_url">搜索或输入网址</string>
+    <string name="search_this_site">在此站点内搜索</string>
+
+    <!-- 菜单 -->
+    <string name="menu_back">后退</string>
+    <string name="menu_forward">前进</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_home">主页</string>
+    <string name="menu_tabs">标签页</string>
+    <string name="menu_more">更多</string>
+    <string name="menu_bookmark">书签</string>
+    <string name="menu_history">历史</string>
+    <string name="menu_download">下载</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_share">分享</string>
+    <string name="menu_incognito">无痕模式</string>
+    <string name="menu_desktop_mode">桌面模式</string>
+    <string name="menu_read_mode">阅读模式</string>
+    <string name="menu_save_offline">离线保存</string>
+    <string name="menu_translate">翻译</string>
+    <string name="menu_qrcode">扫码</string>
+    <string name="menu_userscript">油猴脚本</string>
+    <string name="menu_plugin">插件</string>
+    <string name="menu_ai">AI 助手</string>
+    <string name="menu_floating_video">检测视频</string>
+    <string name="menu_fullscreen">全屏</string>
+    <string name="menu_find_in_page">页面内查找</string>
+    <string name="menu_snapshot">网页截屏</string>
+    <string name="menu_print">打印</string>
+    <string name="menu_view_source">查看源码</string>
+    <string name="menu_add_to_shelf">加入书架</string>
+    <string name="menu_open_in_external">外部打开</string>
+
+    <!-- 标签页 -->
+    <string name="tab_new">新建标签</string>
+    <string name="tab_close">关闭</string>
+    <string name="tab_close_others">关闭其他</string>
+    <string name="tab_close_all">关闭全部</string>
+    <string name="tab_count">已开 %1$d 个标签</string>
+
+    <!-- 引擎 -->
+    <string name="engine_switch_hint">选择搜索引擎</string>
+    <string name="engine_add_custom">添加自定义引擎</string>
+    <string name="engine_name">名称</string>
+    <string name="engine_url_template">URL 模板（含 %s 占位符）</string>
+    <string name="engine_suggest_url">搜索建议接口（可选）</string>
+
+    <!-- 油猴脚本 -->
+    <string name="userscript_installed">已安装</string>
+    <string name="userscript_store">商店</string>
+    <string name="userscript_recommended">推荐</string>
+    <string name="userscript_search">搜索脚本</string>
+    <string name="userscript_install">安装</string>
+    <string name="userscript_uninstall">卸载</string>
+    <string name="userscript_edit">编辑</string>
+    <string name="userscript_enable">启用</string>
+    <string name="userscript_disable">禁用</string>
+    <string name="userscript_author">作者</string>
+    <string name="userscript_version">版本</string>
+    <string name="userscript_description">描述</string>
+    <string name="userscript_run_at">运行时机</string>
+    <string name="userscript_matches">匹配</string>
+    <string name="userscript_grants">授权</string>
+    <string name="userscript_import_local">从本地导入 .user.js</string>
+    <string name="userscript_install_success">已安装脚本：%1$s</string>
+
+    <!-- 插件 -->
+    <string name="plugin_installed">已安装</string>
+    <string name="plugin_store">商店</string>
+    <string name="plugin_install">安装</string>
+    <string name="plugin_uninstall">卸载</string>
+    <string name="plugin_enable">启用</string>
+    <string name="plugin_permissions">权限</string>
+    <string name="plugin_market_featured">精选</string>
+    <string name="plugin_market_top">热门</string>
+    <string name="plugin_market_new">最新</string>
+    <string name="extensions_manager">扩展程序</string>
+    <string name="extensions_load_unpacked">加载已解压的扩展</string>
+    <string name="extensions_import_crx">导入 CRX</string>
+    <string name="extensions_open_store">打开 Chrome 商店</string>
+    <string name="extensions_developer_mode">开发者模式</string>
+    <string name="extensions_install_success">已安装：%1$s</string>
+    <string name="extensions_install_failed">安装失败</string>
+    <string name="extensions_uninstalled">已卸载：%1$s</string>
+
+    <!-- 视频 -->
+    <string name="video_quality">画质</string>
+    <string name="video_quality_auto">自动</string>
+    <string name="video_quality_240p">240P 流畅省流</string>
+    <string name="video_quality_360p">360P 标清</string>
+    <string name="video_quality_480p">480P 高清</string>
+    <string name="video_quality_720p">720P 超清</string>
+    <string name="video_quality_1080p">1080P 蓝光</string>
+    <string name="video_quality_source">原画</string>
+    <string name="video_caption">字幕</string>
+    <string name="video_caption_off">关闭字幕</string>
+    <string name="video_caption_search_online">在线搜索</string>
+    <string name="video_caption_load_external">加载外挂字幕</string>
+    <string name="video_caption_auto_translate">自动翻译</string>
+    <string name="video_caption_target_lang">目标语言</string>
+    <string name="video_caption_bilingual">显示双语</string>
+    <string name="video_caption_style">字幕样式</string>
+    <string name="video_play">播放</string>
+    <string name="video_pause">暂停</string>
+    <string name="video_back_10">后退 10 秒</string>
+    <string name="video_forward_10">前进 10 秒</string>
+    <string name="video_speed">速度</string>
+    <string name="video_fullscreen">全屏</string>
+    <string name="video_download">下载</string>
+    <string name="video_suspended">已开始悬浮播放</string>
+    <string name="video_detected">检测到 %1$d 个视频</string>
+    <string name="video_no_video_found">未检测到视频</string>
+    <string name="video_request_overlay">需要悬浮窗权限以显示悬浮视频</string>
+    <string name="video_translate">翻译</string>
+
+    <!-- 下载 -->
+    <string name="download_in_progress">下载中</string>
+    <string name="download_completed">下载完成</string>
+    <string name="download_failed">下载失败</string>
+    <string name="download_start">开始下载</string>
+    <string name="download_pause">暂停</string>
+    <string name="download_resume">继续</string>
+    <string name="download_cancel">取消</string>
+    <string name="download_retry">重试</string>
+    <string name="download_open">打开</string>
+    <string name="download_folder">下载目录</string>
+    <string name="download_quality">选择画质</string>
+    <string name="download_compress">压缩为</string>
+
+    <!-- 阅读器 -->
+    <string name="reader_novel">小说</string>
+    <string name="reader_manga">漫画</string>
+    <string name="reader_text_size">字号</string>
+    <string name="reader_line_spacing">行距</string>
+    <string name="reader_theme">主题</string>
+    <string name="reader_theme_day">白天</string>
+    <string name="reader_theme_paper">护眼</string>
+    <string name="reader_theme_night">夜间</string>
+    <string name="reader_theme_amoled">纯黑</string>
+    <string name="reader_font">字体</string>
+    <string name="reader_next_chapter">下一章</string>
+    <string name="reader_prev_chapter">上一章</string>
+    <string name="reader_chapter_list">目录</string>
+    <string name="reader_read_progress">阅读进度</string>
+    <string name="reader_extract_whole">提取整本</string>
+    <string name="reader_download_whole">下载整本</string>
+    <string name="reader_ask_ai">让 AI 解释</string>
+    <string name="reader_search_book">搜索书籍</string>
+    <string name="reader_import_source">导入书源</string>
+    <string name="reader_no_source">未导入书源，去导入</string>
+
+    <!-- 书架 -->
+    <string name="shelf_my_books">我的书架</string>
+    <string name="shelf_group_all">全部</string>
+    <string name="shelf_add">添加书籍</string>
+    <string name="shelf_continue">继续阅读</string>
+    <string name="shelf_delete">移出书架</string>
+    <string name="shelf_pin">置顶</string>
+    <string name="shelf_export">导出</string>
+    <string name="shelf_recent">最近阅读</string>
+    <string name="shelf_empty">书架空空如也</string>
+    <string name="shelf_add_local_file">本地导入 EPUB/TXT</string>
+
+    <!-- AI -->
+    <string name="ai_assistant">AI 助手</string>
+    <string name="ai_input_hint">向 AI 提问…</string>
+    <string name="ai_send">发送</string>
+    <string name="ai_stop">停止</string>
+    <string name="ai_new_chat">新对话</string>
+    <string name="ai_clear_history">清空历史</string>
+    <string name="ai_model">模型</string>
+    <string name="ai_explain_selection">让 AI 解释</string>
+    <string name="ai_summarize_page">总结网页</string>
+    <string name="ai_translate_page">翻译网页</string>
+    <string name="ai_profile_default">默认（DeepSeek-V3）</string>
+    <string name="ai_profile_add">添加配置</string>
+    <string name="ai_profile_name">配置名称</string>
+    <string name="ai_profile_base_url">API 地址</string>
+    <string name="ai_profile_api_key">API Key（可选）</string>
+    <string name="ai_profile_model_id">模型 ID</string>
+    <string name="ai_profile_silent">沉默模式（使用免费公开端点）</string>
+    <string name="ai_thinking">思考中…</string>
+
+    <!-- 引擎管理 -->
+    <string name="settings_search_engines">搜索引擎管理</string>
+    <string name="settings_default_engine">默认引擎</string>
+
+    <!-- 设置 -->
+    <string name="settings_appearance">外观</string>
+    <string name="settings_theme">主题</string>
+    <string name="settings_theme_system">跟随系统</string>
+    <string name="settings_theme_day">白天</string>
+    <string name="settings_theme_night">夜间</string>
+    <string name="settings_dark_mode_for_web">网页夜间模式</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_general">通用</string>
+    <string name="settings_home_page">启动页</string>
+    <string name="settings_default_engine">默认搜索引擎</string>
+    <string name="settings_page_load_mode">页面加载方式</string>
+    <string name="settings_ad_block">广告拦截</string>
+    <string name="settings_save_history">保存历史</string>
+    <string name="settings_block_images">屏蔽图片</string>
+    <string name="settings_javascript">启用 JavaScript</string>
+    <string name="settings_playback">播放</string>
+    <string name="settings_default_quality">默认画质</string>
+    <string name="settings_auto_quality">网速自适应</string>
+    <string name="settings_saving_mode">省流模式（限 480P）</string>
+    <string name="settings_video_cache">视频缓存</string>
+    <string name="settings_cache_size">缓存大小</string>
+    <string name="settings_subtitle_default_on">默认显示字幕</string>
+    <string name="settings_subtitle_auto_translate">自动翻译字幕</string>
+    <string name="settings_reader">阅读</string>
+    <string name="settings_reader_default_theme">默认阅读主题</string>
+    <string name="settings_data">数据</string>
+    <string name="settings_backup">备份</string>
+    <string name="settings_restore">还原</string>
+    <string name="settings_clear_cache">清除缓存</string>
+    <string name="settings_about">关于</string>
+    <string name="settings_version">版本</string>
+    <string name="settings_open_source">开源许可</string>
+    <string name="settings_keep_log">保留日志</string>
+    <string name="settings_float_video">悬浮视频</string>
+    <string name="settings_float_globally">全局悬浮</string>
+
+    <!-- 通用 -->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+    <string name="share">分享</string>
+    <string name="copy">复制</string>
+    <string name="copied">已复制</string>
+    <string name="open">打开</string>
+    <string name="close">关闭</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="enable">启用</string>
+    <string name="disable">禁用</string>
+    <string name="add">添加</string>
+    <string name="search">搜索</string>
+    <string name="loading">加载中…</string>
+    <string name="empty">暂无内容</string>
+    <string name="retry">重试</string>
+    <string name="network_error">网络错误</string>
+    <string name="permission_required">需要权限</string>
+    <string name="grant">授予</string>
+
+</resources>

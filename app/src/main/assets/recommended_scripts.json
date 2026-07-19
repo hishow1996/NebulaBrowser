@@ -1,0 +1,8 @@
+{
+  "scripts": [
+    {"id":"redirect-cleaner","name":"直链重定向净化","author":"Nebula","description":"跳过中转链接，直接打开目标网页","url":"https://update.greasyfork.org/scripts/412712.user.js","category":"网络"},
+    {"id":"auto-read-mode","name":"自动启用阅读模式","author":"Nebula","description":"长文章自动开启阅读视图","url":"https://update.greasyfork.org/scripts/420631.user.js","category":"阅读"},
+    {"id":"dark-reader","name":"网页夜间模式","author":"Nebula","description":"所有网页自动应用夜间样式","url":"https://update.greasyfork.org/scripts/412620.user.js","category":"UI"},
+    {"id":"video-parse","name":"视频解析","author":"Nebula","description":"自动调用 VIP 视频解析接口","url":"https://update.greasyfork.org/scripts/444359.user.js","category":"视频"}
+  ]
+}

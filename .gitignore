@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+*/build/
+*.iml
+.idea/
+local.properties
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# SDK / NDK
+android-sdk/
+android-ndk/
+
+# Generated
+.cxx/
+*.apk
+*.aab
+*.keystore
+release/

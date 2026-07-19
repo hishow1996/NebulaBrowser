@@ -1,0 +1,9 @@
+{
+  "profiles": [
+    {"id":"nebula-deepseek","name":"DeepSeek-V3（沉默用户）","baseUrl":"https://api.deepseek.com/v1","apiKey":"","model":"deepseek-chat","silent":true,"temperature":0.7,"maxLength":4096},
+    {"id":"nebula-grok","name":"Grok（沉默用户）","baseUrl":"https://api.x.ai/v1","apiKey":"","model":"grok-beta","silent":true,"temperature":0.7,"maxLength":4096},
+    {"id":"nebula-glm","name":"GLM-4（沉默用户）","baseUrl":"https://open.bigmodel.cn/api/paas/v4","apiKey":"","model":"glm-4-flash","silent":true,"temperature":0.7,"maxLength":4096},
+    {"id":"nebula-qwen","name":"Qwen（沉默用户）","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/v1","apiKey":"","model":"qwen-turbo","silent":true,"temperature":0.7,"maxLength":4096}
+  ],
+  "defaultProfileId":"nebula-deepseek"
+}

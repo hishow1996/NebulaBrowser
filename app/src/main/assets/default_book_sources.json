@@ -1,0 +1,6 @@
+{
+  "sources": [
+    {"bookSourceName":"起点示例","bookSourceUrl":"https://www.qidian.com","bookSourceType":0,"enabled":true,"searchUrl":"https://www.qidian.com/search?kw={{key}}","group":"小说"},
+    {"bookSourceName":"漫画DB示例","bookSourceUrl":"https://www.manhuadb.com","bookSourceType":2,"enabled":true,"searchUrl":"https://www.manhuadb.com/search?q={{key}}","group":"漫画"}
+  ]
+}
