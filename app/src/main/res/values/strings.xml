@@ -11,6 +11,14 @@
     <string name="nav_ai">AI</string>
     <string name="nav_settings">设置</string>
 
+    <!-- 主页 -->
+    <string name="home_quick_nav">快捷导航</string>
+    <string name="home_data_saver_title">数据节省模式</string>
+    <string name="home_data_saver_desc">压缩页面加载，最高省 50% 流量</string>
+    <string name="home_lite_on">省流模式已开启</string>
+    <string name="home_lite_off">省流模式已关闭</string>
+    <string name="home_search_voice_hint">语音搜索</string>
+
     <!-- 地址栏 -->
     <string name="hint_search_url">搜索或输入网址</string>
     <string name="search_this_site">在此站点内搜索</string>
@@ -197,7 +205,6 @@
 
     <!-- 引擎管理 -->
     <string name="settings_search_engines">搜索引擎管理</string>
-    <string name="settings_default_engine">默认引擎</string>
 
     <!-- 设置 -->
     <string name="settings_appearance">外观</string>
