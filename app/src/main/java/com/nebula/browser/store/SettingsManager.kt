@@ -19,6 +19,9 @@ object SettingsManager {
     const val KEY_DEFAULT_QUALITY = "default_quality"
     const val KEY_AUTO_QUALITY = "auto_quality"
     const val KEY_SAVER = "saver_mode"
+    const val KEY_SAVER_BITRATE = "saver_bitrate"
+    const val KEY_SAVER_WIDTH = "saver_width"
+    const val KEY_SAVER_AUTO = "saver_auto"
     const val KEY_DARK_WEB = "dark_web"
     const val KEY_FLOAT_GLOBAL = "float_global"
     const val KEY_AI_PROFILE = "ai_profile_id"
@@ -28,6 +31,8 @@ object SettingsManager {
     const val KEY_VIDEO_CACHE = "video_cache"
     const val KEY_VIDEO_CACHE_SIZE = "video_cache_mb"
     const val KEY_READER_THEME = "reader_theme"
+    /** 网页内视频画质用户选择档位（0=自动 1=240 2=360 3=480 4=720 5=原画） */
+    const val KEY_WEB_VIDEO_QUALITY = "web_video_quality"
 
     var themeMode: Int
         get() = AppContext.prefs.getInt(KEY_THEME_MODE, THEME_DAY)
@@ -40,7 +45,27 @@ object SettingsManager {
     val adBlock get() = getPrefBoolean(KEY_ADS_BLOCK, true)
     val saveHistory get() = getPrefBoolean(KEY_SAVE_HISTORY, true)
     val javascript get() = getPrefBoolean(KEY_JAVASCRIPT, true)
-    val saveMode get() = getPrefBoolean(KEY_SAVER, false)
+
+    /** 网页视频画质压缩（数据节省）总开关 */
+    var saveMode: Boolean
+        get() = getPrefBoolean(KEY_SAVER, false)
+        set(v) = putPref(KEY_SAVER, v)
+
+    /** 目标码率（bps）。0 表示按目标宽度自动选 600kbps。 */
+    var saverBitrate: Int
+        get() = getPrefInt(KEY_SAVER_BITRATE, 600_000)
+        set(v) = putPref(KEY_SAVER_BITRATE, v)
+
+    /** 目标最大宽度（像素），默认 854（480P）。 */
+    var saverWidth: Int
+        get() = getPrefInt(KEY_SAVER_WIDTH, 854)
+        set(v) = putPref(KEY_SAVER_WIDTH, v)
+
+    /** 弱网自动启用（结合带宽采样）。 */
+    var saverAuto: Boolean
+        get() = getPrefBoolean(KEY_SAVER_AUTO, true)
+        set(v) = putPref(KEY_SAVER_AUTO, v)
+
     val darkWeb get() = getPrefBoolean(KEY_DARK_WEB, false)
     val floatGlobal get() = getPrefBoolean(KEY_FLOAT_GLOBAL, true)
 
@@ -67,4 +92,9 @@ object SettingsManager {
     var readerTheme: Int            // 0=白天 1=护眼 2=夜间 3=AMOLED
         get() = getPrefInt(KEY_READER_THEME, 0)
         set(v) = putPref(KEY_READER_THEME, v)
+
+    /** 网页内视频画质用户选择（0=自动 1=240 2=360 3=480 4=720 5=原画） */
+    var webVideoQuality: Int
+        get() = getPrefInt(KEY_WEB_VIDEO_QUALITY, 0)
+        set(v) = putPref(KEY_WEB_VIDEO_QUALITY, v)
 }
