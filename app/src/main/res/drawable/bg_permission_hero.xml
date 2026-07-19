@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 大圆形 hero 背影：浅蓝低饱和内填 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <gradient android:type="radial" android:gradientRadius="200"
+        android:startColor="#1F3B82F6" android:endColor="#0A3B82F6" />
+    <stroke android:width="1dp" android:color="#3360A5FA" />
+</shape>
