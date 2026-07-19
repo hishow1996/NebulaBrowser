@@ -9,55 +9,121 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         app:resize_mode="fit" app:use_controller="false"/>
 
+    <!-- 整体控制层 -->
     <LinearLayout android:id="@+id/controls_layer"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
-            android:gravity="center_vertical" android:padding="12dp"
+
+        <!-- 顶部控制栏 -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="60dp"
+            android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp"
             android:background="@drawable/bg_top_control_gradient">
+
             <ImageView android:id="@+id/btn_back" android:layout_width="36dp" android:layout_height="36dp"
-                android:src="@drawable/ic_close" android:tint="@color/text_inverse"/>
+                android:padding="6dp" android:src="@drawable/ic_back"
+                android:tint="@color/text_inverse"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
             <TextView android:id="@+id/txt_title" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
-                android:layout_marginStart="16dp" android:textColor="@color/text_inverse"
-                android:singleLine="true" android:ellipsize="end"/>
-            <ImageView android:id="@+id/btn_quality" android:layout_width="36dp" android:layout_height="36dp"
-                android:src="@drawable/ic_quality" android:tint="@color/text_inverse"/>
+                android:layout_marginStart="12dp" android:textColor="@color/text_inverse"
+                android:textSize="14sp" android:singleLine="true" android:ellipsize="end"/>
+
+            <!-- ⭐ 画质 chip：胶囊形状，左侧彩色圆点，右侧档位文字 -->
+            <FrameLayout android:id="@+id/btn_quality"
+                android:layout_width="wrap_content" android:layout_height="28dp"
+                android:layout_marginStart="8dp" android:paddingStart="10dp" android:paddingEnd="12dp"
+                android:background="@drawable/bg_quality_chip"
+                android:clickable="true" android:focusable="true">
+
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_gravity="center">
+
+                    <View android:id="@+id/quality_dot"
+                        android:layout_width="8dp" android:layout_height="8dp"
+                        android:background="@drawable/bg_quality_dot"/>
+
+                    <ImageView android:id="@+id/quality_brand"
+                        android:layout_width="16dp" android:layout_height="16dp"
+                        android:layout_marginStart="6dp"
+                        android:src="@drawable/ic_quality_brand"
+                        app:tint="@color/text_inverse"/>
+
+                    <TextView android:id="@+id/txt_quality"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="720P"
+                        android:textColor="@color/text_inverse"
+                        android:textSize="12sp" android:textStyle="bold"/>
+                </LinearLayout>
+            </FrameLayout>
+
             <ImageView android:id="@+id/btn_caption" android:layout_width="36dp" android:layout_height="36dp"
-                android:src="@drawable/ic_caption" android:tint="@color/text_inverse"/>
+                android:padding="8dp" android:src="@drawable/ic_caption"
+                android:tint="@color/text_inverse"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
             <ImageView android:id="@+id/btn_speed" android:layout_width="36dp" android:layout_height="36dp"
-                android:src="@drawable/ic_speed" android:tint="@color/text_inverse"/>
+                android:padding="8dp" android:src="@drawable/ic_speed"
+                android:tint="@color/text_inverse"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
             <ImageView android:id="@+id/btn_fullscreen" android:layout_width="36dp" android:layout_height="36dp"
-                android:src="@drawable/ic_fullscreen" android:tint="@color/text_inverse"/>
+                android:padding="8dp" android:src="@drawable/ic_fullscreen"
+                android:tint="@color/text_inverse"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
         </LinearLayout>
+
         <View android:layout_width="match_parent" android:layout_height="0dp"
             android:layout_weight="1"/>
+
+        <!-- 底部进度条 + 中央播放控制 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center_vertical"
-            android:padding="12dp">
-            <ImageView android:id="@+id/btn_replay" android:layout_width="40dp" android:layout_height="40dp"
-                android:src="@drawable/ic_replay_10" android:tint="@color/text_inverse"/>
-            <ImageView android:id="@+id/btn_play_pause" android:layout_width="60dp" android:layout_height="60dp"
-                android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_pause" android:tint="@color/text_inverse"/>
-            <ImageView android:id="@+id/btn_forward" android:layout_width="40dp" android:layout_height="40dp"
-                android:src="@drawable/ic_forward_10" android:tint="@color/text_inverse"/>
-            <TextView android:id="@+id/txt_current" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginStart="16dp"
-                android:text="00:00" android:textColor="@color/text_inverse"/>
+            android:orientation="vertical" android:paddingStart="12dp" android:paddingEnd="12dp"
+            android:paddingBottom="8dp">
             <SeekBar android:id="@+id/seek_bar"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:layout_margin="6dp"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:progressTint="@color/nebula_blue"
-                android:progressBackgroundTint="@color/divider_strong"/>
-            <TextView android:id="@+id/txt_duration" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="00:00"
-                android:textColor="@color/text_inverse"/>
+                android:progressBackgroundTint="@color/divider_strong"
+                android:thumbTint="@color/nebula_blue_light"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:paddingTop="4dp">
+                <TextView android:id="@+id/txt_current" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00" android:textColor="@color/text_inverse"
+                    android:textSize="12sp"/>
+                <View android:layout_width="0dp" android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView android:id="@+id/btn_replay" android:layout_width="40dp" android:layout_height="40dp"
+                    android:padding="6dp" android:src="@drawable/ic_replay_10"
+                    android:tint="@color/text_inverse"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                <ImageView android:id="@+id/btn_play_pause" android:layout_width="56dp" android:layout_height="56dp"
+                    android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+                    android:padding="8dp" android:src="@drawable/ic_pause"
+                    android:tint="@color/text_inverse"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                <ImageView android:id="@+id/btn_forward" android:layout_width="40dp" android:layout_height="40dp"
+                    android:padding="6dp" android:src="@drawable/ic_forward_10"
+                    android:tint="@color/text_inverse"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                <View android:layout_width="0dp" android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView android:id="@+id/txt_duration" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="00:00"
+                    android:textColor="@color/text_inverse" android:textSize="12sp"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <androidx.media3.ui.SubtitleView
         android:id="@+id/subtitle_view"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="80dp"/>
+
+    <!-- 画质选择面板（默认隐藏） -->
+    <FrameLayout android:id="@+id/quality_panel_anchor"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:visibility="gone"/>
 </FrameLayout>
