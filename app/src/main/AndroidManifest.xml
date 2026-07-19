@@ -115,6 +115,10 @@
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".reader.shelf.AddBookActivity" android:exported="false"
             android:parentActivityName=".MainActivity"/>
+        <activity android:name=".media.player.PlayerActivity" android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Nebula"/>
 
         <!-- 悬浮视频播放服务 -->
         <service
