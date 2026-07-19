@@ -32,6 +32,8 @@ class BrowserFragment : Fragment() {
     private val b get() = _b!!
     private val tabManager = TabManager.get()
     private lateinit var vm: BrowserViewModel
+    private var overlayPermissionLauncher: androidx.activity.result.ActivityResultLauncher<android.content.Intent>? = null
+    private var pendingFloatingVideoUrl: String? = null
 
     private val quickSites = listOf(
         QuickSite("G", "Google", "https://www.google.com", 0xFF4285F4.toInt()),
@@ -70,6 +72,13 @@ class BrowserFragment : Fragment() {
         b.btnMore.setOnClickListener { showMoreMenu() }
         b.fabDetectVideo.setOnClickListener { detectVideo() }
 
+        // 悬浮播放权限引导 → 授权后启动 FloatingVideoService
+        overlayPermissionLauncher = registerForActivityResult(
+            androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == android.app.Activity.RESULT_OK) startFloatingPlayback()
+            else toast(getString(R.string.permission_overlay_required))
+        }
         // 主页交互
         b.homeMenu.setOnClickListener { showMoreMenu() }
         b.homeQrcode.setOnClickListener { toast(getString(R.string.menu_qrcode)) }
@@ -270,6 +279,7 @@ class BrowserFragment : Fragment() {
             BrowserMenuSheet.MenuItem(R.drawable.ic_plugin, "Chrome 商店", "webstore"),
             BrowserMenuSheet.MenuItem(R.drawable.ic_ai, getString(R.string.menu_ai), "ai"),
             BrowserMenuSheet.MenuItem(R.drawable.ic_translate, getString(R.string.menu_translate), "translate"),
+            BrowserMenuSheet.MenuItem(R.drawable.ic_video, getString(R.string.menu_floating_video), "floating_video"),
             BrowserMenuSheet.MenuItem(R.drawable.ic_incognito, getString(R.string.menu_incognito),
                 "incognito", checkable = true, checked = false),
             BrowserMenuSheet.MenuItem(R.drawable.ic_settings, getString(R.string.menu_settings), "settings")
@@ -281,6 +291,7 @@ class BrowserFragment : Fragment() {
                 "webstore" -> openActivity("com.nebula.browser.plugin.ui.ChromeWebStoreActivity")
                 "ai" -> openActivity("com.nebula.browser.ai.ui.AiChatActivity")
                 "translate" -> toast(getString(R.string.menu_translate))
+                "floating_video" -> requestFloatingPlayback()
                 "download" -> openActivity("com.nebula.browser.browser.downloader.DownloadListActivity")
                 "bookmark" -> toast(getString(R.string.menu_bookmark))
                 "history" -> toast(getString(R.string.menu_history))
@@ -317,6 +328,38 @@ class BrowserFragment : Fragment() {
         intent.putExtra("video_url", url)
         intent.putExtra("title", tabManager.current?.title ?: "")
         startActivity(intent)
+    }
+
+    /** 用户点击「悬浮播放」菜单：若已获悬浮窗权限则直接启动；否则弹引导页。 */
+    private fun requestFloatingPlayback() {
+        val list = com.nebula.browser.media.detector.VideoDetectorInterceptor.recentList()
+        if (list.isEmpty()) {
+            toast(getString(R.string.video_no_video_found))
+            return
+        }
+        pendingFloatingVideoUrl = list.first()
+        if (com.nebula.browser.common.PermissionUtil.canDrawOverlays(requireContext())) {
+            startFloatingPlayback()
+        } else {
+            val guide = com.nebula.browser.permission.PermissionGuideActivity.intent(
+                requireContext(),
+                type = "overlay",
+                title = getString(R.string.permission_overlay_title),
+                desc = getString(R.string.permission_overlay_desc),
+                icon = com.nebula.browser.R.drawable.ic_video,
+                btnText = getString(R.string.grant)
+            )
+            overlayPermissionLauncher?.launch(guide)
+        }
+    }
+
+    private fun startFloatingPlayback() {
+        val url = pendingFloatingVideoUrl
+        if (url == null) { toast(getString(R.string.video_no_video_found)); return }
+        val intent = android.content.Intent(requireContext(), FloatingVideoService::class.java)
+        intent.putExtra("video_url", url)
+        com.nebula.browser.common.AppContext.appContext.startForegroundService(intent)
+        pendingFloatingVideoUrl = null
     }
 
     override fun onDestroyView() {
