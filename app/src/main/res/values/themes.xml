@@ -109,6 +109,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <!-- 蓝色 Switch overlay（主页省流开关） -->
+    <style name="ThemeOverlay.Nebula.SwitchBlue" parent="">
+        <item name="colorControlActivated">@color/nebula_blue</item>
+        <item name="android:colorForeground">@color/nebula_blue</item>
+    </style>
+
     <!-- 文字样式 -->
     <style name="TextAppearance.Nebula.Title" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textColor">@color/text_primary</item>
