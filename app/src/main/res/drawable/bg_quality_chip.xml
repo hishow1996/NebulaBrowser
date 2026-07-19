@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 画质 chip 胶囊背景：圆角 24dp，浅黑半透 + 内嵌浅蓝描边 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="20dp" />
+    <solid android:color="#33FFFFFF" />
+    <stroke android:width="1dp" android:color="#6658E6FF" />
+</shape>
