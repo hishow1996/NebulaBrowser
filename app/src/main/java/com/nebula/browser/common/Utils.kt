@@ -28,6 +28,53 @@ object PermissionUtil {
     fun hasInstallPermission(context: Context): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.O || context.packageManager.canRequestPackageInstalls()
 
+    /** Android 13+ 通知权限。低版本默认已授予。 */
+    fun hasNotificationPermission(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+        return context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) ==
+            PackageManager.PERMISSION_GRANTED
+    }
+
+    /** 相机 / 麦克风 等危险权限。 */
+    fun hasPermission(context: Context, permission: String): Boolean =
+        context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+
+    /** 跳转到通知设置页。 */
+    fun openNotificationSettings(activity: Activity, code: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val i = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                putExtra(Settings.EXTRA_APP_PACKAGE, activity.packageName)
+                putExtra(Settings.EXTRA_CHANNEL_ID, "nebula_${activity.packageName}")
+            }
+            activity.startActivityForResult(i, code)
+        } else openAppSettings(activity, code)
+    }
+
+    /** 跳转到「安装未知应用」设置页。 */
+    fun openInstallSettings(activity: Activity, code: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val i = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                Uri.parse("package:${activity.packageName}"))
+            activity.startActivityForResult(i, code)
+        } else openAppSettings(activity, code)
+    }
+
+    /** 跳转到「所有文件访问」设置页。 */
+    fun openManageStorageSettings(activity: Activity, code: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val i = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                Uri.parse("package:${activity.packageName}"))
+            activity.startActivityForResult(i, code)
+        } else openAppSettings(activity, code)
+    }
+
+    /** 跳转到本应用详情页（兼容兜底）。 */
+    fun openAppSettings(activity: Activity, code: Int) {
+        val i = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse("package:${activity.packageName}"))
+        activity.startActivityForResult(i, code)
+    }
+
     /** dp -> px */
     fun dpToPx(context: Context, dp: Float): Float =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
