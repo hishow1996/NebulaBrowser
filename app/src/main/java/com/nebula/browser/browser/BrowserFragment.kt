@@ -75,15 +75,33 @@ class BrowserFragment : Fragment() {
         b.homeQrcode.setOnClickListener { toast(getString(R.string.menu_qrcode)) }
         b.homeSearchBar.setOnClickListener { enterSearchMode() }
         b.homeVoice.setOnClickListener { toast(getString(R.string.menu_qrcode)) }
+        b.homeLiteSwitch.isChecked = com.nebula.browser.media.saver.DataSaverBus.enabled.value
         b.homeLiteSwitch.setOnCheckedChangeListener { _, c ->
-            toast(if (c) "省流模式已开启" else "省流模式已关闭")
+            com.nebula.browser.media.saver.DataSaverBus.setEnabled(c)
+            toast(getString(R.string.home_data_saver_on, c))
         }
+        observeSaverStats()
 
         buildQuickNav()
 
         ensureFirstTab()
         observeTab()
         updateHomeVisibility()
+    }
+
+    /** 实时数据节省统计：反映到主页 Lite 卡片副标题。 */
+    private fun observeSaverStats() {
+        // 在 fragment 生命周期内订阅的简单回调式刷新（不依赖额外导入）
+        kotlinx.coroutines.MainScope().launch {
+            com.nebula.browser.media.saver.DataSaverBus.enabled.collect { en ->
+                b.homeLiteSwitch.setOnCheckedChangeListener(null)
+                b.homeLiteSwitch.isChecked = en
+                b.homeLiteSwitch.setOnCheckedChangeListener { _, c ->
+                    com.nebula.browser.media.saver.DataSaverBus.setEnabled(c)
+                    toast(getString(R.string.home_data_saver_on, c))
+                }
+            }
+        }
     }
 
     private fun buildQuickNav() {
@@ -292,14 +310,13 @@ class BrowserFragment : Fragment() {
         }
         toast(getString(R.string.video_detected, list.size))
         val url = list.first()
-        if (!com.nebula.browser.common.PermissionUtil.canDrawOverlays(requireContext())) {
-            com.nebula.browser.common.PermissionUtil.requestOverlayPermission(requireActivity(), 0x101)
-            toast(getString(R.string.video_request_overlay))
-            return
-        }
-        val intent = android.content.Intent(requireContext(), FloatingVideoService::class.java)
+        // 直接打开内置播放器（带画质 chip）。如果用户已经在悬浮窗模式，
+        // 可以在更多菜单里选择悬浮播放。
+        val intent = android.content.Intent(requireContext(),
+            com.nebula.browser.media.player.PlayerActivity::class.java)
         intent.putExtra("video_url", url)
-        com.nebula.browser.common.AppContext.appContext.startForegroundService(intent)
+        intent.putExtra("title", tabManager.current?.title ?: "")
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
