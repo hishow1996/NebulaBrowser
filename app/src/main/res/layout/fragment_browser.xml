@@ -2,16 +2,196 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/bg_primary">
 
+    <!-- ============ 主页 (UC Browser 国际版风格) ============ -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_root"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 顶部品牌栏 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:id="@+id/home_menu"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_more"
+                    android:contentDescription="@string/menu_more" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/home_qrcode"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_qrcode"
+                    android:contentDescription="@string/menu_qrcode" />
+            </LinearLayout>
+
+            <!-- 大圆搜索栏 -->
+            <LinearLayout
+                android:id="@+id/home_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/bg_home_search"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/text_tertiary" />
+
+                <TextView
+                    android:id="@+id/home_search_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/hint_search_url"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/home_voice"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_qrcode"
+                    app:tint="@color/icon_secondary" />
+            </LinearLayout>
+
+            <!-- 快捷导航条 (Quick Navigation Bar) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/quick_nav_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:clipToPadding="false"
+                android:scrollbars="none" />
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/divider" />
+
+            <!-- Lite 省流模式卡片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_lite_mode_card">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_moon"
+                    app:tint="@color/nebula_blue" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_data_saver_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/home_data_saver_desc"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/home_lite_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:theme="@style/ThemeOverlay.Nebula.SwitchBlue" />
+            </LinearLayout>
+
+            <!-- 免责滚动距离 spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ============ WebView 浏览区 ============ -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
-        android:layout_width="0dp" android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/url_bar_container"
         app:layout_constraintBottom_toTopOf="@id/bottom_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
         <FrameLayout
             android:id="@+id/web_container"
             android:layout_width="match_parent"
@@ -19,51 +199,63 @@
             android:background="@color/bg_primary" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- 顶部地址栏 -->
+    <!-- 顶部地址栏 (浏览模式) -->
     <LinearLayout
         android:id="@+id/url_bar_container"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="12dp" android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:background="@color/bg_primary"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView android:id="@+id/engine_icon"
-            android:layout_width="32dp" android:layout_height="32dp"
+        <ImageView
+            android:id="@+id/engine_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:padding="4dp"
-            android:src="@drawable/ic_search"
             android:background="@drawable/bg_url_bar"
-            android:contentDescription="@string/engine_switch_hint"/>
+            android:src="@drawable/ic_search"
+            android:contentDescription="@string/engine_switch_hint" />
 
-        <EditText android:id="@+id/url_bar"
-            android:layout_width="0dp" android:layout_height="40dp"
+        <EditText
+            android:id="@+id/url_bar"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_url_bar"
             android:hint="@string/hint_search_url"
             android:imeOptions="actionGo"
             android:inputType="textUri|text"
-            android:paddingStart="16dp" android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:singleLine="true"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_tertiary"
             android:textSize="14sp" />
 
-        <ProgressBar android:id="@+id/url_progress"
-            android:layout_width="24dp" android:layout_height="24dp"
+        <ProgressBar
+            android:id="@+id/url_progress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="8dp"
             android:visibility="gone" />
     </LinearLayout>
 
-    <ProgressBar android:id="@+id/url_progress_bar"
-        android:layout_width="match_parent" android:layout_height="2dp"
+    <ProgressBar
+        android:id="@+id/url_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:style="@android:style/Widget.ProgressBar.Horizontal"
-        android:max="100" android:progress="0"
+        android:max="100"
+        android:progress="0"
         android:progressDrawable="@drawable/bg_progress_url"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/url_bar_container"/>
+        app:layout_constraintTop_toBottomOf="@id/url_bar_container" />
 
     <!-- 底部工具栏 -->
     <LinearLayout
@@ -76,57 +268,70 @@
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView android:id="@+id/btn_back"
-            android:layout_width="0dp" android:layout_height="40dp"
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
             android:src="@drawable/ic_back"
-            android:scaleType="center"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/menu_back"/>
+            android:contentDescription="@string/menu_back" />
 
-        <ImageView android:id="@+id/btn_forward"
-            android:layout_width="0dp" android:layout_height="40dp"
+        <ImageView
+            android:id="@+id/btn_forward"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
             android:src="@drawable/ic_forward"
-            android:scaleType="center"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/menu_forward"/>
+            android:contentDescription="@string/menu_forward" />
 
-        <ImageView android:id="@+id/btn_home"
-            android:layout_width="0dp" android:layout_height="40dp"
+        <ImageView
+            android:id="@+id/btn_home"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
             android:src="@drawable/ic_home"
-            android:scaleType="center"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/menu_home"/>
+            android:contentDescription="@string/menu_home" />
 
-        <ImageView android:id="@+id/btn_tabs"
-            android:layout_width="0dp" android:layout_height="40dp"
+        <ImageView
+            android:id="@+id/btn_tabs"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
             android:src="@drawable/ic_tabs"
-            android:scaleType="center"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/menu_tabs"/>
+            android:contentDescription="@string/menu_tabs" />
 
-        <ImageView android:id="@+id/btn_more"
-            android:layout_width="0dp" android:layout_height="40dp"
+        <ImageView
+            android:id="@+id/btn_more"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_more"
-            android:scaleType="center"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/menu_more"/>
+            android:scaleType="center"
+            android:src="@drawable/ic_more"
+            android:contentDescription="@string/menu_more" />
     </LinearLayout>
 
     <!-- 悬浮 FAB - 检测视频 -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_detect_video"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp" android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_video"
+        android:visibility="gone"
         app:backgroundTint="@color/nebula_blue"
-        app:tint="@color/text_inverse"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@id/bottom_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/menu_floating_video"/>
+        app:tint="@color/text_inverse"
+        android:contentDescription="@string/menu_floating_video" />
 </androidx.constraintlayout.widget.ConstraintLayout>
